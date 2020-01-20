@@ -7,14 +7,31 @@
 //
 
 import UIKit
-
+import FirebaseFirestore
+import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        FirebaseApp.configure()
+        
+        // Add a new document with a generated ID
+        let db = Firestore.firestore()
+        
+        let userDoc = db.collection("users").document("userDocument")
+        userDoc.setData([
+            "first": "Steve",
+            "last": "Austin",
+            "born": 1965
+        ]) { (error) in
+            if let err = error {
+                print(err.localizedDescription)
+            }else {
+                print("Data Updated successfully..!!!")
+            }
+        }
         return true
     }
 
@@ -34,4 +51,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
